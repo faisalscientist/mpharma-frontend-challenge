@@ -1,4 +1,5 @@
 import {
+  AddProductType,
   EditProductType,
   ProductsState,
   ProductType,
@@ -10,6 +11,7 @@ import {
   PRODUCT_ERROR,
   GET_PRODUCTS,
   EDIT_PRODUCT,
+  ADD_PRODUCT,
 } from "./action"
 
 const initialState: ProductsState = {
@@ -44,6 +46,23 @@ const rootReducer = (
         ...state,
         product: product as ProductType,
       }
+    case ADD_PRODUCT:
+      const addProductPayload = action.payload as AddProductType
+      const productToBeAdded: ProductType = {
+        id: state.products[state.products.length - 1].id + 1,
+        name: addProductPayload.name,
+        prices: [
+          {
+            id: 0,
+            price: +addProductPayload.price,
+            date: new Date().toISOString(),
+          },
+        ],
+      }
+      return {
+        ...state,
+        products: [...(state.products as ProductType[]), productToBeAdded],
+      }
     case EDIT_PRODUCT:
       const payload = action.payload as EditProductType
       const productIndex = state.products.findIndex(
@@ -70,7 +89,6 @@ const rootReducer = (
           updatedProduct,
           ...state.products.slice(productIndex + 1),
         ]
-        console.log(updatedProduct)
         updatedProduct.prices.sort((a, b) => {
           return new Date(b.date).getTime() - new Date(a.date).getTime()
         })

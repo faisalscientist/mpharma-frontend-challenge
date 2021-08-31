@@ -11,23 +11,25 @@ import {
 } from "./types"
 
 const BackButton = () => (
-  <button className="flex items-center border-2 border-gray-400 px-3 py-2 rounded-full">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className="h-5 w-5"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={2}
-        d="M15 19l-7-7 7-7"
-      />
-    </svg>{" "}
-    <div>Back</div>
-  </button>
+  <Link to="/">
+    <button className="flex items-center border-2 border-gray-400 px-3 py-2 rounded-full">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-5 w-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M15 19l-7-7 7-7"
+        />
+      </svg>{" "}
+      <div>Back</div>
+    </button>
+  </Link>
 )
 
 const EditProduct = () => {
@@ -71,24 +73,30 @@ const EditProduct = () => {
   }, [dispatch, id, product])
 
   if (!product) {
-    return <ErrorMessage message={`No product found with id: ${1}`} />
+    return (
+      <div className="flex items-center justify-between">
+        <ErrorMessage message={`No product found with id: ${1}`} />
+        <BackButton />
+      </div>
+    )
   }
 
   return (
     <div className="w-full">
       <div className="flex items-center justify-between">
-        <Link to="/">
-          <BackButton />
-        </Link>
+        <BackButton />
         <div>
           Edit product: <b>{product.name}</b>
         </div>
       </div>
       <div className="mt-10">
         {successMessage && (
-          <div className="mb-2 border-2 border-green-300 py-2 px-2 text-center text-green-700 bg-green-200 rounded-sm">
-            {successMessage}
-          </div>
+          <div
+            className="mb-2 border-2 border-green-300 py-2 px-2 text-center text-green-700 bg-green-200 rounded-sm"
+            dangerouslySetInnerHTML={{
+              __html: successMessage as string,
+            }}
+          ></div>
         )}
       </div>
       <div className="border-2 border-gray-200 px-5 py-5 shadow-lg">

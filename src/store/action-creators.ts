@@ -1,5 +1,6 @@
 import store from "."
 import {
+  AddProductType,
   DispatchType,
   EditProductType,
   ProductType,
@@ -23,7 +24,7 @@ export const getProducts = (payload: ProductType[]): StoreAction => {
   return { type: GET_PRODUCTS, payload }
 }
 
-export const addProduct = (payload: ProductType): StoreAction => {
+export const addProduct = (payload: AddProductType): StoreAction => {
   return { type: ADD_PRODUCT, payload }
 }
 
@@ -48,7 +49,6 @@ export const fetchProducts = () => async (dispatch: DispatchType) => {
     return
   }
   try {
-    console.log(process.env.REACT_APP_API_URL)
     const response = await fetch(process.env.REACT_APP_API_URL as string)
     let { products } = await response.json()
     dispatch(setLoading(false))

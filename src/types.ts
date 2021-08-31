@@ -7,6 +7,11 @@ export type ProductsState = {
   product: ProductType | null
 }
 
+export type AddProductType = {
+  name: string
+  price: number
+}
+
 export type EditProductType = {
   id: number
   name: string
@@ -30,6 +35,7 @@ export type StoreAction = {
   payload?:
     | ProductType[]
     | EditProductType
+    | AddProductType
     | ProductType
     | boolean
     | string

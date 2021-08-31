@@ -44,6 +44,27 @@ const EditButton = () => (
   </button>
 )
 
+const AddButton = () => (
+  <Link to="new">
+    <button className="">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-10 w-10 text-blue-500"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+    </button>
+  </Link>
+)
+
 const Products = () => {
   const dispatch = useDispatch()
 
@@ -71,8 +92,9 @@ const Products = () => {
   return (
     <>
       <div className="w-full">
-        <div className="text-center mb-5 text-xl font-bold">
-          List of products
+        <div className="text-center mb-5 text-xl font-bold flex justify-between items-center">
+          <div> List of products</div>
+          <AddButton />
         </div>
         <table className="shadow-lg bg-white">
           <thead>
