@@ -103,7 +103,7 @@ const EditProduct = () => {
               id="name"
               className="input"
               onChange={handleInputChange}
-              value={productDetails?.name}
+              value={productDetails.name || ""}
               placeholder="Enter product name"
               autoFocus
             />
@@ -118,7 +118,7 @@ const EditProduct = () => {
               id="price"
               className="input"
               placeholder="Enter price"
-              value={productDetails?.price}
+              value={productDetails.price || ""}
               onChange={handleInputChange}
             />
           </div>
