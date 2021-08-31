@@ -3,27 +3,34 @@ import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import ErrorMessage from "./ErrorMessage"
 import Loader from "./Loader"
+import { deleteProduct } from "./store/action-creators"
 import { fetchProducts } from "./store/action-creators"
 import { ProductsState, ProductType, RootState } from "./types"
 
-const DeleteButton = () => (
-  <button>
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className="h-5 w-5 text-red-500"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={2}
-        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-      />
-    </svg>
-  </button>
-)
+const DeleteButton = ({ id }: { id: number }) => {
+  const dispatch = useDispatch()
+  const handleDelete = () => {
+    dispatch(deleteProduct(id))
+  }
+  return (
+    <button onClick={handleDelete}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-5 w-5 text-red-500"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+        />
+      </svg>
+    </button>
+  )
+}
 
 const EditButton = () => (
   <button className="mr-3">
@@ -93,43 +100,47 @@ const Products = () => {
     <>
       <div className="w-full">
         <div className="text-center mb-5 text-xl font-bold flex justify-between items-center">
-          <div> List of products</div>
+          <div>
+            {products.length > 0 ? "List of products" : "No products available"}
+          </div>
           <AddButton />
         </div>
-        <table className="shadow-lg bg-white">
-          <thead>
-            <tr>
-              <th className="bg-blue-100 border text-left px-8 py-4">
-                Product
-              </th>
-              <th className="bg-blue-100 border text-left px-8 py-4">
-                Latest Price
-              </th>
-              <th className="bg-blue-100 border text-left px-8 py-4"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {products.map((product) => (
-              <tr key={product.id}>
-                <td className="border px-8 py-4">{product.name}</td>
-                <td className="border px-8 py-4">
-                  GHS{" "}
-                  {product.prices.length > 0
-                    ? product.prices[0].price.toFixed(2)
-                    : "-"}
-                </td>
-                <td className="border px-8 py-4 flex items-center">
-                  <div className="mt-1">
-                    <Link to={`${product.id}/edit`}>
-                      <EditButton />
-                    </Link>
-                  </div>
-                  <DeleteButton />
-                </td>
+        {products.length > 0 && (
+          <table className="shadow-lg bg-white w-full">
+            <thead>
+              <tr>
+                <th className="bg-blue-100 border text-left px-8 py-4">
+                  Product
+                </th>
+                <th className="bg-blue-100 border text-left px-8 py-4">
+                  Latest Price
+                </th>
+                <th className="bg-blue-100 border text-left px-8 py-4"></th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {products.map((product) => (
+                <tr key={product.id}>
+                  <td className="border px-8 py-4">{product.name}</td>
+                  <td className="border px-8 py-4">
+                    GHS{" "}
+                    {product.prices.length > 0
+                      ? product.prices[0].price.toFixed(2)
+                      : "-"}
+                  </td>
+                  <td className="border px-8 py-4 flex items-center">
+                    <div className="mt-1">
+                      <Link to={`${product.id}/edit`}>
+                        <EditButton />
+                      </Link>
+                    </div>
+                    <DeleteButton id={product.id} />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </>
   )

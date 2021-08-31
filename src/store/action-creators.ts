@@ -32,7 +32,7 @@ export const editProduct = (payload: EditProductType): StoreAction => {
   return { type: EDIT_PRODUCT, payload }
 }
 
-export const deleteProduct = (payload: ProductType): StoreAction => {
+export const deleteProduct = (payload: number): StoreAction => {
   return { type: DELETE_PRODUCT, payload }
 }
 

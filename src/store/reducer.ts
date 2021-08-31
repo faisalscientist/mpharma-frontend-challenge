@@ -12,6 +12,7 @@ import {
   GET_PRODUCTS,
   EDIT_PRODUCT,
   ADD_PRODUCT,
+  DELETE_PRODUCT,
 } from "./action"
 
 const initialState: ProductsState = {
@@ -48,8 +49,9 @@ const rootReducer = (
       }
     case ADD_PRODUCT:
       const addProductPayload = action.payload as AddProductType
+      const lastProduct = state.products[state.products.length - 1]
       const productToBeAdded: ProductType = {
-        id: state.products[state.products.length - 1].id + 1,
+        id: lastProduct ? lastProduct.id + 1 : 0,
         name: addProductPayload.name,
         prices: [
           {
@@ -95,6 +97,11 @@ const rootReducer = (
         return { ...state, products: updatedProducts, product: updatedProduct }
       }
       return state
+    case DELETE_PRODUCT:
+      const products = state.products.filter(
+        (product) => product.id !== action.payload
+      )
+      return { ...state, products }
     default:
       return state
   }
