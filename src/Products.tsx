@@ -10,7 +10,9 @@ import { ProductsState, ProductType, RootState } from "./types"
 const DeleteButton = ({ id }: { id: number }) => {
   const dispatch = useDispatch()
   const handleDelete = () => {
-    dispatch(deleteProduct(id))
+    if (window.confirm("Sure want to delete?")) {
+      dispatch(deleteProduct(id))
+    }
   }
   return (
     <button onClick={handleDelete}>
