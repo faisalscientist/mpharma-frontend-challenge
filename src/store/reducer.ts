@@ -70,7 +70,6 @@ const rootReducer = (
       const productIndex = state.products.findIndex(
         (product) => +product.id === payload.id
       )
-      console.log("tje index", productIndex)
       if (productIndex !== -1) {
         const productToEdit = state.products[productIndex]
         const updatedProduct = {

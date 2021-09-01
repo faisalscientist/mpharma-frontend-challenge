@@ -21,7 +21,6 @@ describe("EditProduct Test", () => {
   })
   describe("EditProduct Store State", () => {
     afterEach(() => {
-      console.log("will reset")
       resetStore()
     })
     it("store should contain product when product state is set", () => {
@@ -152,6 +151,7 @@ describe("EditProduct Test", () => {
       ).toEqual(expectedAction)
     })
     it("should update a product in store", () => {
+      resetStore()
       const products = [product]
       let expectedAction = {
         type: EDIT_PRODUCT,
@@ -188,7 +188,6 @@ describe("EditProduct Test", () => {
       store.dispatch(
         editProduct({ id: 100, name: "Updated Product Name", price: 200 })
       )
-      console.log(initialStoreState)
       expect(reducer).toEqual({
         ...initialStoreState,
         products,

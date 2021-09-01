@@ -57,7 +57,6 @@ const EditProduct = () => {
   }
 
   const handleSumit = (e: React.SyntheticEvent) => {
-    console.log(`You have successfully updated ${product.name}`)
     setSuccessMessage("")
     e.preventDefault()
     dispatch(editProduct(productDetails))

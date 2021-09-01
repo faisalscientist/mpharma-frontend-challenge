@@ -31,3 +31,9 @@ export const resetStore = (): MockStore => {
   const mockStore = configureMockStore([])
   return mockStore()
 }
+
+describe("EditProduct Test", () => {
+  it("should be defined", () => {
+    expect(true).toBeTruthy()
+  })
+})
