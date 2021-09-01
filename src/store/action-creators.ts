@@ -11,8 +11,8 @@ import {
   DELETE_PRODUCT,
   EDIT_PRODUCT,
   LOADING,
-  PRODUCT_ERROR,
-  GET_PRODUCTS,
+  SET_PRODUCT_ERROR,
+  SET_PRODUCTS,
   GET_PRODUCT,
 } from "./action"
 
@@ -20,8 +20,8 @@ export const setLoading = (payload: boolean): StoreAction => {
   return { type: LOADING, payload }
 }
 
-export const getProducts = (payload: ProductType[]): StoreAction => {
-  return { type: GET_PRODUCTS, payload }
+export const setProducts = (payload: ProductType[]): StoreAction => {
+  return { type: SET_PRODUCTS, payload }
 }
 
 export const addProduct = (payload: AddProductType): StoreAction => {
@@ -36,8 +36,8 @@ export const deleteProduct = (payload: number): StoreAction => {
   return { type: DELETE_PRODUCT, payload }
 }
 
-export const productError = (payload: string): StoreAction => {
-  return { type: PRODUCT_ERROR, payload }
+export const setProductError = (payload: string): StoreAction => {
+  return { type: SET_PRODUCT_ERROR, payload }
 }
 
 export const getProduct = (payload: string): StoreAction => {
@@ -52,11 +52,11 @@ export const fetchProducts = () => async (dispatch: DispatchType) => {
     const response = await fetch(process.env.REACT_APP_API_URL as string)
     let { products } = await response.json()
     dispatch(setLoading(false))
-    dispatch(getProducts(products))
-    dispatch(productError(""))
+    dispatch(setProducts(products))
+    dispatch(setProductError(""))
   } catch (error) {
     dispatch(setLoading(false))
-    dispatch(getProducts([]))
-    dispatch(productError((error as Error).message))
+    dispatch(setProducts([]))
+    dispatch(setProductError((error as Error).message))
   }
 }

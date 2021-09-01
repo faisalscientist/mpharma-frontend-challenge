@@ -62,12 +62,13 @@ const AddProduct = () => {
   return (
     <div className="w-full">
       <div className="flex items-center justify-between">
-        <BackButton />
-        <div>Add product</div>
+        <BackButton data-testid="backButton" />
+        <div data-testid="productTitle">Add product</div>
       </div>
       <div className="mt-10">
         {successMessage && (
           <div
+            data-testid="successMessage"
             className="mb-2 border-2 border-green-300 py-2 px-2 text-center text-green-700 bg-green-200 rounded-sm"
             dangerouslySetInnerHTML={{
               __html: successMessage as string,
@@ -77,7 +78,7 @@ const AddProduct = () => {
       </div>
       <div className="border-2 border-gray-200 px-5 py-5 shadow-lg">
         <form onSubmit={handleSumit}>
-          <div className="flex flex-col">
+          <div className="flex flex-col" data-testid="productName">
             <label htmlFor="name" className="text-gray-500">
               Product Name
             </label>
@@ -92,7 +93,7 @@ const AddProduct = () => {
               autoFocus
             />
           </div>
-          <div className="flex flex-col mt-5">
+          <div className="flex flex-col mt-5" data-testid="productPrice">
             <label htmlFor="price" className="text-gray-500">
               Price
             </label>
@@ -107,6 +108,7 @@ const AddProduct = () => {
             />
           </div>
           <button
+            data-testid="submitButton"
             type="submit"
             className="mt-8 mb-5 rounded-full bg-blue-500 text-white px-3 py-2"
           >

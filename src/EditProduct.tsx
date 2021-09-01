@@ -57,6 +57,7 @@ const EditProduct = () => {
   }
 
   const handleSumit = (e: React.SyntheticEvent) => {
+    console.log(`You have successfully updated ${product.name}`)
     setSuccessMessage("")
     e.preventDefault()
     dispatch(editProduct(productDetails))
@@ -75,8 +76,11 @@ const EditProduct = () => {
   if (!product) {
     return (
       <div className="flex items-center justify-between">
-        <ErrorMessage message={`No product found with id: ${1}`} />
-        <BackButton />
+        <ErrorMessage
+          data-testid="productError"
+          message={`No product found with id: ${id}`}
+        />
+        <BackButton data-testid="backButton" />
       </div>
     )
   }
@@ -84,14 +88,15 @@ const EditProduct = () => {
   return (
     <div className="w-full">
       <div className="flex items-center justify-between">
-        <BackButton />
-        <div>
+        <BackButton data-testid="backButton" />
+        <div data-testid="productTitle">
           Edit product: <b>{product.name}</b>
         </div>
       </div>
       <div className="mt-10">
         {successMessage && (
           <div
+            data-testid="successMessage"
             className="mb-2 border-2 border-green-300 py-2 px-2 text-center text-green-700 bg-green-200 rounded-sm"
             dangerouslySetInnerHTML={{
               __html: successMessage as string,
@@ -100,8 +105,8 @@ const EditProduct = () => {
         )}
       </div>
       <div className="border-2 border-gray-200 px-5 py-5 shadow-lg">
-        <form onSubmit={handleSumit}>
-          <div className="flex flex-col">
+        <form onSubmit={handleSumit} data-testid="editForm">
+          <div className="flex flex-col" data-testid="productName">
             <label htmlFor="name" className="text-gray-500">
               Product Name
             </label>
@@ -116,7 +121,7 @@ const EditProduct = () => {
               autoFocus
             />
           </div>
-          <div className="flex flex-col mt-5">
+          <div className="flex flex-col mt-5" data-testid="productPrice">
             <label htmlFor="price" className="text-gray-500">
               Price
             </label>
@@ -131,6 +136,7 @@ const EditProduct = () => {
             />
           </div>
           <button
+            data-testid="submitButton"
             type="submit"
             className="mt-8 mb-5 rounded-full bg-blue-500 text-white px-3 py-2"
           >

@@ -34,28 +34,30 @@ const DeleteButton = ({ id }: { id: number }) => {
   )
 }
 
-const EditButton = () => (
-  <button className="mr-3">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className="h-5 w-5 text-blue-900"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={2}
-        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-      />
-    </svg>
-  </button>
+const EditButton = ({ id }: { id: number }) => (
+  <Link to={`${id}/edit`}>
+    <button className="mr-3">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-5 w-5 text-blue-900"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+        />
+      </svg>
+    </button>
+  </Link>
 )
 
 const AddButton = () => (
   <Link to="new">
-    <button className="">
+    <button>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className="h-10 w-10 text-blue-500"
@@ -78,7 +80,6 @@ const Products = () => {
   const dispatch = useDispatch()
 
   const productsState: ProductsState = useSelector((state: RootState) => state)
-
   const products = productsState.products.map((product: ProductType) => {
     product.prices = product.prices.sort((a, b) => {
       return new Date(b.date).getTime() - new Date(a.date).getTime()
@@ -91,24 +92,32 @@ const Products = () => {
   }, [dispatch])
 
   if (productsState.loading) {
-    return <Loader />
+    return <Loader data-testid="loader" />
   }
 
   if (productsState.productError !== "") {
-    return <ErrorMessage message={productsState.productError} />
+    return (
+      <ErrorMessage
+        data-testid="productError"
+        message={productsState.productError}
+      />
+    )
   }
 
   return (
     <>
-      <div className="w-full">
+      <div className="w-full" data-testid="productsSection">
         <div className="text-center mb-5 text-xl font-bold flex justify-between items-center">
-          <div>
+          <div data-testid="productsTitle">
             {products.length > 0 ? "List of products" : "No products available"}
           </div>
-          <AddButton />
+          <AddButton data-testid="addProductButton" />
         </div>
         {products.length > 0 && (
-          <table className="shadow-lg bg-white w-full">
+          <table
+            className="shadow-lg bg-white w-full"
+            data-testid="productsTable"
+          >
             <thead>
               <tr>
                 <th className="bg-blue-100 border text-left px-8 py-4">
@@ -132,11 +141,15 @@ const Products = () => {
                   </td>
                   <td className="border px-8 py-4 flex items-center">
                     <div className="mt-1">
-                      <Link to={`${product.id}/edit`}>
-                        <EditButton />
-                      </Link>
+                      <EditButton
+                        data-testid="editProductButton"
+                        id={product.id}
+                      />
                     </div>
-                    <DeleteButton id={product.id} />
+                    <DeleteButton
+                      data-testid="deleteProductButton"
+                      id={product.id}
+                    />
                   </td>
                 </tr>
               ))}

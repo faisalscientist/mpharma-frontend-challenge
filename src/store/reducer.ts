@@ -8,8 +8,8 @@ import {
 import {
   GET_PRODUCT,
   LOADING,
-  PRODUCT_ERROR,
-  GET_PRODUCTS,
+  SET_PRODUCT_ERROR,
+  SET_PRODUCTS,
   EDIT_PRODUCT,
   ADD_PRODUCT,
   DELETE_PRODUCT,
@@ -17,7 +17,7 @@ import {
 
 const initialState: ProductsState = {
   products: [],
-  loading: true,
+  loading: false,
   productError: "",
   product: null,
 }
@@ -29,12 +29,12 @@ const rootReducer = (
   switch (action.type) {
     case LOADING:
       return { ...state, loading: action.payload as boolean }
-    case PRODUCT_ERROR:
+    case SET_PRODUCT_ERROR:
       return {
         ...state,
         productError: action.payload as string,
       }
-    case GET_PRODUCTS:
+    case SET_PRODUCTS:
       return {
         ...state,
         products: action.payload as ProductType[],
@@ -70,6 +70,7 @@ const rootReducer = (
       const productIndex = state.products.findIndex(
         (product) => +product.id === payload.id
       )
+      console.log("tje index", productIndex)
       if (productIndex !== -1) {
         const productToEdit = state.products[productIndex]
         const updatedProduct = {
